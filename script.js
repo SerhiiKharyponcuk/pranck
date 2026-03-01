@@ -97,7 +97,30 @@ function logLine() {
     logEl.scrollTop = logEl.scrollHeight;
 }
 
+// create audio context for panic sound
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function playPanicTone(duration = 0.5) {
+    const oscillator = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    oscillator.type = 'sawtooth';
+    oscillator.frequency.setValueAtTime(440, audioCtx.currentTime);
+    oscillator.connect(gain);
+    gain.connect(audioCtx.destination);
+    gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.5, audioCtx.currentTime + 0.01);
+    oscillator.start();
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+    oscillator.stop(audioCtx.currentTime + duration + 0.02);
+}
+
 function triggerPanic() {
+    // speech warning
+    if ('speechSynthesis' in window) {
+        const msg = new SpeechSynthesisUtterance('ai ai ai, don\'t do that');
+        msg.rate = 1.2;
+        window.speechSynthesis.speak(msg);
+    }
+    playPanicTone(1);
     const panic = document.getElementById('panic');
     if (!panic) return;
     document.body.classList.add('panic-mode');
