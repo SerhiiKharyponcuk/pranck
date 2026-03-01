@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Matrix Encrypting Prank (Safe)</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+
+    <div id="overlay" class="centered">
+        <div id="start-screen">
+        
+            <button id="start-btn">START</button>
+        </div>
+        <div id="protocol-screen" class="hidden">
+            <h1 class="protocol-title">ENCRYPTION PROTOCOL ACTIVE</h1>
+            <ul class="warnings">
+                <li>SIMULATION MODE</li>
+            </ul>
+            <div id="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+            <div id="timer">300</div>
+            <div id="log"></div>
+            <button id="unlock-btn" class="hidden">UNLOCK</button>
+            <div id="android-instructions">
+                <p>For extra realism you may voluntarily enable Screen pinning (Android):</p>
+                <ol>
+                    <li>Settings → Security → Screen pinning → ON</li>
+                    <li>Recent apps → App icon → Pin</li>
+                </ol>
+                <p>To exit: press Back + Overview (or follow Android's hint).</p>
+                <p><em>Only if you want to.</em></p>
+            </div>
+        </div>
+        <div id="final-screen" class="hidden">
+            <h1>😂 It’s a prank!</h1>
+            <p>Nothing was locked. If you enabled screen pinning, just exit it.</p>
+        </div>
+        <div id="panic" class="hidden">
+            <span>SYSTEM BREACH!</span>
+            <div id="angry">😡</div>
+            <div id="hacker-info">
+                <p>-- intrusion detected --</p>
+                <p>data exfiltration in progress...</p>
+                <p>location: Hilversum</p>
+                <p>name: Nikita Klimovich</p>
+                <p>nickname: Froggikok</p>
+                <p>origin: Belarus</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
