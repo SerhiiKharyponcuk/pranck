@@ -167,6 +167,26 @@ button:focus {
 #panic.visible #angry {
     animation: spin 0.5s linear infinite;
 }
+#secret-close {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    width: 56px;
+    height: 56px;
+    border: none;
+    background: rgba(0,0,0,0.0);
+    color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    z-index: 10001;
+    opacity: 0; /* invisible */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+#secret-close.revealed {
+    opacity: 0.95;
+    background: rgba(0,0,0,0.6);
+    transform: scale(1.05);
+}
 #hacker-info {
     position: absolute;
     /* lifted a bit from the bottom for better visibility */
@@ -187,6 +207,32 @@ button:focus {
         bottom: 12%;
     }
 }
+
+/* quest modal */
+#quest-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 11000;
+    background: rgba(0,0,0,0.6);
+}
+.quest-card {
+    background: rgba(0,0,0,0.9);
+    border: 2px solid #00ff00;
+    padding: 1rem 1.2rem;
+    max-width: 90vw;
+    color: #00ff00;
+    text-align: left;
+}
+.quest-card h2 { margin-top: 0; }
+.quest-actions { margin-top: 0.8rem; display:flex; gap:0.5rem; }
+#quest-questions input { width: 100%; margin-top: 0.3rem; margin-bottom: 0.6rem; }
+#quest-feedback { margin-top: 0.6rem; color: #ffcc00; }
 @keyframes flicker {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }

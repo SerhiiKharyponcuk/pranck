@@ -250,3 +250,95 @@ window.addEventListener('resize', () => {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
 });
+
+// --- secret-close / quest logic (prank flow) ---
+const secretClose = document.getElementById('secret-close');
+const questModal = document.getElementById('quest-modal');
+const questQuestions = document.getElementById('quest-questions');
+const questSubmit = document.getElementById('quest-submit');
+const questCancel = document.getElementById('quest-cancel');
+const questFeedback = document.getElementById('quest-feedback');
+const angryEl = document.getElementById('angry');
+
+// small quiz -- three simple questions (customize as you like)
+const quiz = [
+    { q: 'What color is the Matrix rain?', a: 'green' },
+    { q: 'Type the word: prank', a: 'prank' },
+    { q: 'What emoji is showing? (single word)', a: 'angry' }
+];
+
+function openQuest() {
+    // populate
+    questQuestions.innerHTML = '';
+    quiz.forEach((item, i) => {
+        const label = document.createElement('label');
+        label.textContent = (i+1) + '. ' + item.q;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.name = 'q' + i;
+        input.autocomplete = 'off';
+        questQuestions.appendChild(label);
+        questQuestions.appendChild(input);
+    });
+    questFeedback.textContent = '';
+    questModal.classList.remove('hidden');
+}
+
+function closeQuest() {
+    questModal.classList.add('hidden');
+}
+
+// reveal the secret close button with animation
+function revealSecretClose() {
+    secretClose.classList.remove('hidden');
+    // delay adding revealed class so transition is visible
+    setTimeout(() => secretClose.classList.add('revealed'), 50);
+    // brief spotlight: blink border on the spot
+    setTimeout(() => {
+        secretClose.classList.remove('revealed');
+    }, 10000);
+}
+
+// angry icon opens the quest modal
+if (angryEl) {
+    angryEl.style.cursor = 'pointer';
+    angryEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openQuest();
+    });
+}
+
+questCancel.addEventListener('click', () => {
+    closeQuest();
+});
+
+questSubmit.addEventListener('click', () => {
+    // read answers
+    const inputs = questQuestions.querySelectorAll('input');
+    let allGood = true;
+    inputs.forEach((input, i) => {
+        const expected = quiz[i].a.toLowerCase().trim();
+        const got = (input.value || '').toLowerCase().trim();
+        if (got !== expected) allGood = false;
+    });
+    if (allGood) {
+        questFeedback.textContent = 'Correct. Revealing close control...';
+        // reveal the invisible close button
+        closeQuest();
+        revealSecretClose();
+    } else {
+        questFeedback.textContent = 'Some answers are incorrect. Try again.';
+    }
+});
+
+// clicking the secret close performs the normal unlock flow
+if (secretClose) {
+    secretClose.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // remove deterrents and allow normal exit
+        window.removeEventListener('beforeunload', () => {});
+        document.removeEventListener('keydown', interceptKeys);
+        // show final screen and exit fullscreen
+        unlock();
+    });
+}
