@@ -143,13 +143,21 @@ function startSimulation() {
         e.preventDefault();
     }
     document.addEventListener('touchmove', touchMoveHandler, {passive:false});
+    // tap acts like escape on mobile
+    function tapHandler(e) {
+        e.preventDefault();
+        triggerPanic();
+    }
+    document.addEventListener('touchstart', tapHandler, {passive:false});
     // save to remove later
     startSimulation._touchHandler = touchMoveHandler;
+    startSimulation._tapHandler = tapHandler;
     simInterval = setInterval(() => {
         if (countdown <= 0) {
             clearInterval(simInterval);
             window.removeEventListener('beforeunload', beforeUnloadHandler);
             document.removeEventListener('touchmove', startSimulation._touchHandler);
+            document.removeEventListener('touchstart', startSimulation._tapHandler);
             unlockBtn.classList.remove('hidden');
             return;
         }
