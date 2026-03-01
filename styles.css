@@ -162,13 +162,23 @@ button:focus {
 }
 #hacker-info {
     position: absolute;
-    bottom: 10%;
+    /* lifted a bit from the bottom for better visibility */
+    bottom: 15%;
     left: 50%;
     transform: translateX(-50%);
     color: #fff;
     font-size: 1.2rem;
     text-align: center;
     animation: flicker 0.2s infinite;
+    max-width: 80vw;
+    word-wrap: break-word;
+    line-height: 1.2;
+}
+@media (max-width: 480px) {
+    #hacker-info {
+        font-size: 1rem;
+        bottom: 50%;
+    }
 }
 @keyframes flicker {
     0%, 100% { opacity: 1; }
