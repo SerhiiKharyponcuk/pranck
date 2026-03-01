@@ -153,6 +153,13 @@ button:focus {
 }
 #panic.hidden { display: none; }
 #panic.visible { display: flex; animation: panicFlash 0.5s infinite alternate; }
+#panic span {
+    position: absolute;
+    top: 10%;
+    width: 100%;
+    font-size: 3rem;
+    font-weight: bold;
+}
 #angry {
     font-size: 5rem;
     animation: none;
@@ -177,7 +184,7 @@ button:focus {
 @media (max-width: 480px) {
     #hacker-info {
         font-size: 1rem;
-        bottom: 50%;
+        bottom: 12%;
     }
 }
 @keyframes flicker {
